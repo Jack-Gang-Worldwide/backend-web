@@ -14,6 +14,8 @@ type EnvConstants struct {
 	DB_NAME     string
 }
 
+// InsertEnvConstants is to get the enviroments that the developer used
+// so the database connection will open dynamically
 func InsertEnvConstants() *EnvConstants {
 	godotenv.Load()
 	envConstants := &EnvConstants{}
