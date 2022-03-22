@@ -31,6 +31,10 @@ import (
 	valorantRepositoryPkg "github.com/Jack-Gang-Worldwide/backend-web/internal/valorant/repository/impl"
 	valorantServicePkg "github.com/Jack-Gang-Worldwide/backend-web/internal/valorant/service/impl"
 
+	memberControllerPkg "github.com/Jack-Gang-Worldwide/backend-web/internal/members/controller"
+	memberRepositoryPkg "github.com/Jack-Gang-Worldwide/backend-web/internal/members/repository/impl"
+	memberServicePkg "github.com/Jack-Gang-Worldwide/backend-web/internal/members/service/impl"
+
 	"github.com/SIC-Unud/sicgolib"
 	"github.com/gorilla/mux"
 )
@@ -74,4 +78,9 @@ func InitializeController(router *mux.Router, db *sql.DB){
 	valorantService := valorantServicePkg.ProvideValorantService(valorantRepository)
 	valorantController := valorantControllerPkg.ProvideValorantController(webrouter, valorantService)
 	valorantController.InitializeController()
+
+	memberRepository := memberRepositoryPkg.ProvideMemberRepository(db)
+	memberService := memberServicePkg.ProvideMembersService(memberRepository)
+	memberController := memberControllerPkg.ProvideMembersController(webrouter, memberService)
+	memberController.InitializeController()
 }
