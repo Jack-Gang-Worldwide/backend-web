@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS member;
+
+DROP TABLE IF EXISTS valorant;
+
+DROP TABLE IF EXISTS genshin_impact;
+
+DROP TABLE IF EXISTS fortnite;
+
+DROP TABLE IF EXISTS apex_legends;
+
+DROP TABLE IF EXISTS mobile_legends;
+
+DROP TABLE IF EXISTS dota2;
+
+DROP TABLE IF EXISTS the_forest;
