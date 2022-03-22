@@ -7,6 +7,7 @@ import (
 
 	"github.com/Jack-Gang-Worldwide/backend-web/pkg/controller"
 	"github.com/SIC-Unud/sicgolib"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
