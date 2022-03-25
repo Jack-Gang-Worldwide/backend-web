@@ -8,4 +8,5 @@ import (
 
 type MembersService interface {
 	GetAllMembers(ctx context.Context) (dto.MembersResponse, error)
+	InsertNewMember(ctx context.Context, mr dto.MemberRequest) error
 }
