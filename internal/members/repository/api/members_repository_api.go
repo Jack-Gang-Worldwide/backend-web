@@ -9,4 +9,5 @@ import (
 type MembersRepository interface {
 	GetAllMembers(ctx context.Context) (entity.Members, error)
 	CheckMembersExists(ctx context.Context)(int, error)
+	InsertNewMember(ctx context.Context, member entity.Member)error
 }
