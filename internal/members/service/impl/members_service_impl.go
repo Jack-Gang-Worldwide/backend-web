@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/Jack-Gang-Worldwide/backend-web/internal/members/dto"
+	"github.com/Jack-Gang-Worldwide/backend-web/internal/members/entity"
 	membersRepositorypkg "github.com/Jack-Gang-Worldwide/backend-web/internal/members/repository/api"
 	"github.com/SIC-Unud/sicgolib"
 )
@@ -15,6 +16,15 @@ type membersServiceImpl struct {
 
 func ProvideMembersService(rr membersRepositorypkg.MembersRepository)*membersServiceImpl{
 	return &membersServiceImpl{rr: rr}
+}
+
+func(ms membersServiceImpl)InsertNewMember(ctx context.Context, mr dto.MemberRequest) error {
+	err := ms.rr.InsertNewMember(ctx, entity.Member(mr.CreateMemberEntity()))
+	if err != nil {
+		panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
+			sicgolib.NewErrorResponseValue("internal", "server error")))
+	}
+	return nil
 }
 
 func(ms membersServiceImpl)GetAllMembers(ctx context.Context)(dto.MembersResponse, error){

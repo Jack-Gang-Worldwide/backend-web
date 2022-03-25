@@ -16,10 +16,31 @@ type membersRepositoryImpl struct {
 var (
 	SELECT_MEMBERS = sq.Select("id", "real_name", "birth", "born", "description", "created_at", "updated_at").From("member")
 	CHECK_MEMBERS = sq.Select("count(*)").From("member")
+	INSERT_MEMBER = sq.Insert("member").Columns("real_name", "birth", "born", "description").Values(sq.Expr("?, ?, ?, ?"))
 )
 
 func ProvideMemberRepository(DB *sql.DB)*membersRepositoryImpl{
 	return &membersRepositoryImpl{DB: DB}
+}
+
+func(m membersRepositoryImpl)InsertNewMember(ctx context.Context, member entity.Member) error {
+	query := INSERT_MEMBER
+	stmt, _, err := query.ToSql()
+	if err != nil {
+		log.Printf("ERROR InsertNewMember -> error: %v\n", err)
+		return err
+	}
+	prpd, err := m.DB.PrepareContext(ctx, stmt)
+	if err != nil {
+		log.Printf("ERROR InsertNewMember -> error: %v\n", err)
+		return err
+	}
+	_, err = prpd.ExecContext(ctx, member.RealName, member.Birth, member.Born, member.Description)
+	if err != nil {
+		log.Printf("ERROR InsertNewMember -> error: %v\n", err)
+		return err
+	}
+	return nil
 }
 
 func(m membersRepositoryImpl)GetAllMembers(ctx context.Context)(entity.Members, error){
