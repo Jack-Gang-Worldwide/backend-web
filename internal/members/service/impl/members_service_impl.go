@@ -18,13 +18,13 @@ func ProvideMembersService(rr membersRepositorypkg.MembersRepository)*membersSer
 	return &membersServiceImpl{rr: rr}
 }
 
-func(ms membersServiceImpl)InsertNewMember(ctx context.Context, mr dto.MemberRequest) error {
+func(ms membersServiceImpl)InsertNewMember(ctx context.Context, mr dto.MemberRequest) (bool, error) {
 	err := ms.rr.InsertNewMember(ctx, entity.Member(mr.CreateMemberEntity()))
 	if err != nil {
 		panic(sicgolib.NewErrorResponse(500, sicgolib.RESPONSE_ERROR_RUNTIME_MESSAGE,
 			sicgolib.NewErrorResponseValue("internal", "server error")))
 	}
-	return nil
+	return true, nil
 }
 
 func(ms membersServiceImpl)GetAllMembers(ctx context.Context)(dto.MembersResponse, error){
