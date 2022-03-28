@@ -23,8 +23,8 @@ func(mc *MembersController) insertNewMember(rw http.ResponseWriter, r *http.Requ
 			sicgolib.RESPONSE_ERROR_BUSINESS_LOGIC_MESSAGE,
 			sicgolib.NewErrorResponseValue("request body", "invalid json format "+err.Error())))
 	}
-	mc.ms.InsertNewMember(r.Context(), *memberRequest)
-	sicgolib.NewBaseResponse(201, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, nil).SendResponse(&rw)
+	res, err := mc.ms.InsertNewMember(r.Context(), *memberRequest)
+	sicgolib.NewBaseResponse(201, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, res).SendResponse(&rw)
 }
 
 func(mc *MembersController) viewAllMembers(rw http.ResponseWriter, r *http.Request){
