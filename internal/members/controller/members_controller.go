@@ -2,7 +2,6 @@ package controller
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/Jack-Gang-Worldwide/backend-web/internal/global"
 	"github.com/Jack-Gang-Worldwide/backend-web/internal/members/dto"
@@ -25,8 +24,7 @@ func(mc *MembersController) insertNewMember(rw http.ResponseWriter, r *http.Requ
 			sicgolib.NewErrorResponseValue("request body", "invalid json format "+err.Error())))
 	}
 	res, err := mc.ms.InsertNewMember(r.Context(), *memberRequest)
-	resConv := strconv.FormatBool(res)
-	sicgolib.NewBaseResponse(201, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, resConv).SendResponse(&rw)
+	sicgolib.NewBaseResponse(201, sicgolib.RESPONSE_SUCCESS_MESSAGE, nil, res).SendResponse(&rw)
 }
 
 func(mc *MembersController) viewAllMembers(rw http.ResponseWriter, r *http.Request){
