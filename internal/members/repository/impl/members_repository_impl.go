@@ -23,24 +23,26 @@ func ProvideMemberRepository(DB *sql.DB)*membersRepositoryImpl{
 	return &membersRepositoryImpl{DB: DB}
 }
 
-func(m membersRepositoryImpl)InsertNewMember(ctx context.Context, member entity.Member) error {
+func(m membersRepositoryImpl)InsertNewMember(ctx context.Context, member entity.Member) (uint, error) {
 	query := INSERT_MEMBER
 	stmt, _, err := query.ToSql()
 	if err != nil {
 		log.Printf("ERROR InsertNewMember -> error: %v\n", err)
-		return err
+		return 0, err
 	}
 	prpd, err := m.DB.PrepareContext(ctx, stmt)
 	if err != nil {
 		log.Printf("ERROR InsertNewMember -> error: %v\n", err)
-		return err
+		return 0, err
 	}
-	_, err = prpd.ExecContext(ctx, member.RealName, member.Birth, member.Born, member.Description)
+	res, err := prpd.ExecContext(ctx, member.RealName, member.Birth, member.Born, member.Description)
 	if err != nil {
 		log.Printf("ERROR InsertNewMember -> error: %v\n", err)
-		return err
+		return 0, err
 	}
-	return nil
+	id, err := res.LastInsertId()
+	uintId := uint(id)
+	return uintId, nil
 }
 
 func(m membersRepositoryImpl)GetAllMembers(ctx context.Context)(entity.Members, error){
