@@ -7,4 +7,5 @@ const (
 	API_PATH_GET_ALL_MOBILE_LEGENDS_MEMBERS = "/mobilelegends/members"
 	API_PATH_INSERT_MEMBERS                 = "/members"
 	API_PATH_GET_ALL_GENSHIN_MEMBERS        = "/genshinimpact/members"
+	API_PATH_GET_ALL_APEX_MEMBERS           = "/apexlegends/members"
 )
